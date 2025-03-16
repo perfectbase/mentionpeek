@@ -15,9 +15,14 @@ export const fetchPost = createServerFn({ method: "GET" })
     const post = await axios
       .get<PostType>(`https://jsonplaceholder.typicode.com/posts/${data}`)
       .then((r) => r.data)
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error(err);
-        if (err.status === 404) {
+        if (
+          typeof err === "object" &&
+          err !== null &&
+          "status" in err &&
+          err.status === 404
+        ) {
           throw notFound();
         }
         throw err;
@@ -32,5 +37,5 @@ export const fetchPosts = createServerFn({ method: "GET" }).handler(
     return axios
       .get<Array<PostType>>("https://jsonplaceholder.typicode.com/posts")
       .then((r) => r.data.slice(0, 10));
-  },
+  }
 );
