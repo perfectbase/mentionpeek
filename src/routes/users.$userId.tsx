@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "redaxios";
-import type { User } from "~/utils/users";
-import { DEPLOY_URL } from "~/utils/users";
+import type { User } from "~/lib/users";
+import { DEPLOY_URL } from "~/lib/users";
 import { NotFound } from "~/components/NotFound";
 import { UserErrorComponent } from "~/components/UserError";
 

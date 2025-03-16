@@ -1,7 +1,7 @@
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import axios from "redaxios";
-import { DEPLOY_URL } from "../utils/users";
-import type { User } from "../utils/users";
+import { DEPLOY_URL } from "../lib/users";
+import type { User } from "../lib/users";
 
 export const Route = createFileRoute("/users")({
   loader: async () => {

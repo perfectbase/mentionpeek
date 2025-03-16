@@ -10,7 +10,7 @@ import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
-import { seo } from "~/utils/seo";
+import { seo } from "~/lib/seo";
 
 export const Route = createRootRoute({
   head: () => ({
