@@ -3,9 +3,12 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    NODE_ENV: z.enum(["development", "test", "production"]),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
     ADMIN_USERNAME: z.string(),
     ADMIN_PASSWORD: z.string(),
+    DATABASE_URL: z.string(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,
