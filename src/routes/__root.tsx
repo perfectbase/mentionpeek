@@ -11,6 +11,21 @@ import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/lib/seo";
+import { auth } from "~/server/auth";
+import { getWebRequest } from "@tanstack/react-start/server";
+import { createServerFn } from "@tanstack/react-start";
+
+const getUser = createServerFn({ method: "GET" }).handler(async () => {
+  const { headers } = getWebRequest()!;
+  const session = await auth.api.getSession({ headers });
+
+  return session?.user
+    ? {
+        name: session.user.name,
+        username: session.user.username,
+      }
+    : null;
+});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -51,6 +66,12 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
+  beforeLoad: async () => {
+    const user = await getUser();
+    return {
+      user,
+    };
+  },
   errorComponent: (props) => {
     return (
       <RootDocument>
@@ -120,6 +141,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             Deferred
           </Link>{" "}
           <Link
+            // @ts-expect-error - This route does not exist
             to="/this-route-does-not-exist"
             activeProps={{
               className: "font-bold",

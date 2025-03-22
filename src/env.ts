@@ -9,6 +9,7 @@ export const env = createEnv({
     ADMIN_USERNAME: z.string(),
     ADMIN_PASSWORD: z.string(),
     DATABASE_URL: z.string(),
+    BETTER_AUTH_SECRET: z.string(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,
