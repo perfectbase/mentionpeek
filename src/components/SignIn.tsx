@@ -1,7 +1,9 @@
+import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { authClient } from "~/lib/auth-client";
 
 export function SignIn() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ export function SignIn() {
         username, // This can be email or username
         password,
       });
-      // Redirect will happen automatically through authClient
+      await router.navigate({ to: "/" });
     } catch (err) {
       setError("Invalid username or password");
       console.error(err);
