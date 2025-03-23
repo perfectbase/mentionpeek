@@ -8,6 +8,13 @@
       "when": 1742286813675,
       "tag": "0000_purple_mercury",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742702577686,
+      "tag": "0001_light_imperial_guard",
+      "breakpoints": true
     }
   ]
 }
