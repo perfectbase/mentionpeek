@@ -16,11 +16,13 @@
     "script": "dotenv -e .env -- tsx"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.2",
     "@t3-oss/env-core": "^0.12.0",
     "@tanstack/react-router": "^1.114.23",
     "@tanstack/react-router-devtools": "^1.114.23",
     "@tanstack/react-start": "^1.114.23",
+    "ai": "^4.2.0",
     "better-auth": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
