@@ -1,9 +1,9 @@
 import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import axios from "redaxios";
-import { DEPLOY_URL } from "../lib/users";
-import type { User } from "../lib/users";
+import { DEPLOY_URL } from "../../lib/users";
+import type { User } from "../../lib/users";
 
-export const Route = createFileRoute("/users")({
+export const Route = createFileRoute("/_authed/users")({
   loader: async () => {
     return await axios
       .get<Array<User>>(DEPLOY_URL + "/api/users")

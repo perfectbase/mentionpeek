@@ -5,7 +5,7 @@ import { DEPLOY_URL } from "~/lib/users";
 import { NotFound } from "~/components/NotFound";
 import { UserErrorComponent } from "~/components/UserError";
 
-export const Route = createFileRoute("/users/$userId")({
+export const Route = createFileRoute("/_authed/users/$userId")({
   loader: async ({ params: { userId } }) => {
     return await axios
       .get<User>(DEPLOY_URL + "/api/users/" + userId)
