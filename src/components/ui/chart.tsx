@@ -267,10 +267,12 @@ function ChartLegendContent({
   hideIcon = false,
   payload,
   verticalAlign = "bottom",
+  layout = "horizontal",
   nameKey,
 }: React.ComponentProps<"div"> &
   Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
     hideIcon?: boolean;
+    layout?: "horizontal" | "vertical";
     nameKey?: string;
   }) {
   const { config } = useChart();
@@ -282,7 +284,9 @@ function ChartLegendContent({
   return (
     <div
       className={cn(
-        "flex items-center justify-center gap-4",
+        layout === "horizontal"
+          ? "flex items-center justify-center gap-4"
+          : "flex flex-col items-start gap-2",
         verticalAlign === "top" ? "pb-3" : "pt-3",
         className
       )}

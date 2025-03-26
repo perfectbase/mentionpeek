@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_authed/deferred")({
   loader: async () => {
     return {
       deferredStuff: new Promise<string>((r) =>
-        setTimeout(() => r("Hello deferred!"), 2000),
+        setTimeout(() => r("Hello deferred!"), 2000)
       ),
       deferredPerson: slowServerFn({ data: "Tanner Linsley" }),
       person: await personServerFn({ data: "John Doe" }),

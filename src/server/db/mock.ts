@@ -5,7 +5,7 @@ import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import type { Platform, Sentiment } from "./schema";
 
-const gemini = google("gemini-2.0-flash-001");
+const gemini = google("gemini-2.0-flash");
 
 // Define Zod schema for mention generation
 const mentionSchema = z.object({
@@ -24,7 +24,10 @@ type GeneratedMention = z.infer<typeof mentionSchema>;
 // Function to generate realistic mentions using Gemini
 const generateRealisticMentions = async (): Promise<GeneratedMention[]> => {
   // Create a prompt for Gemini to generate realistic social media mentions
-  const prompt = `Generate 30 realistic mentions for a given platform and sentiment. include line breaks and emojis in some of them`;
+  const prompt = `Generate 30 realistic mentions for multiple platforms and sentiments.
+  Make sure a few of them are longer and include line breaks and emojis.
+  The mentions should be from the past 30 days. (today is ${new Date().toISOString().split("T")[0]})
+  `;
 
   try {
     // Generate text with Gemini
