@@ -58,6 +58,7 @@
     "@types/pg": "^8.11.11",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@vercel/node": "^5.1.14",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.30.5",
     "postcss": "^8.5.1",
