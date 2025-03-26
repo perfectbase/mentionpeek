@@ -228,6 +228,70 @@ export const searchConfig = pgTable(
 export type SearchConfig = InferSelectModel<typeof searchConfig>;
 export type NewSearchConfig = InferInsertModel<typeof searchConfig>;
 
+export const searchEvent = pgTable(
+  "searchEvent",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => cuid()),
+    startedAt: timestamp("startedAt").notNull(),
+    endedAt: timestamp("endedAt").notNull(),
+    runTime: timestamp("runTime").notNull(),
+    platform: text("platform").notNull().$type<Platform>(),
+    query: text("query").notNull(),
+    aiPrompt: text("aiPrompt"),
+    totalCount: text("totalCount").notNull().default("0"),
+    negativeCount: text("negativeCount").notNull().default("0"),
+    neutralCount: text("neutralCount").notNull().default("0"),
+    positiveCount: text("positiveCount").notNull().default("0"),
+    relevantCount: text("relevantCount").notNull().default("0"),
+    rejectedCount: text("rejectedCount").notNull().default("0"),
+    searchConfigId: text("searchConfigId")
+      .notNull()
+      .references(() => searchConfig.id, { onDelete: "cascade" }),
+    accountId: text("accountId")
+      .notNull()
+      .references(() => account.id, { onDelete: "cascade" }),
+    ...timestamps,
+  },
+  (table) => [
+    index("search_event_account_idx").on(table.accountId),
+    index("search_event_config_idx").on(table.searchConfigId),
+    index("search_event_platform_idx").on(table.platform),
+    index("search_event_started_at_idx").on(table.startedAt),
+    index("search_event_ended_at_idx").on(table.endedAt),
+    index("search_event_platform_account_idx").on(
+      table.platform,
+      table.accountId
+    ),
+    index("search_event_account_date_idx").on(table.accountId, table.startedAt),
+    index("search_event_total_count_idx").on(table.accountId, table.totalCount),
+    index("search_event_negative_count_idx").on(
+      table.accountId,
+      table.negativeCount
+    ),
+    index("search_event_neutral_count_idx").on(
+      table.accountId,
+      table.neutralCount
+    ),
+    index("search_event_positive_count_idx").on(
+      table.accountId,
+      table.positiveCount
+    ),
+    index("search_event_relevant_count_idx").on(
+      table.accountId,
+      table.relevantCount
+    ),
+    index("search_event_rejected_count_idx").on(
+      table.accountId,
+      table.rejectedCount
+    ),
+    index("search_event_created_idx").on(table.createdAt),
+  ]
+);
+export type SearchEvent = InferSelectModel<typeof searchEvent>;
+export type NewSearchEvent = InferInsertModel<typeof searchEvent>;
+
 export const mention = pgTable(
   "mention",
   {
@@ -248,6 +312,9 @@ export const mention = pgTable(
     searchConfigId: text("searchConfigId").references(() => searchConfig.id, {
       onDelete: "cascade",
     }),
+    searchEventId: text("searchEventId").references(() => searchEvent.id, {
+      onDelete: "cascade",
+    }),
     accountId: text("accountId")
       .notNull()
       .references(() => account.id, { onDelete: "cascade" }),
@@ -257,6 +324,7 @@ export const mention = pgTable(
     index("mention_account_idx").on(table.accountId),
     index("mention_email_group_idx").on(table.emailGroupId),
     index("mention_search_config_idx").on(table.searchConfigId),
+    index("mention_search_event_idx").on(table.searchEventId),
     index("mention_platform_idx").on(table.platform),
     index("mention_date_idx").on(table.date),
     index("mention_sentiment_idx").on(
