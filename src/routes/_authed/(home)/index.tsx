@@ -279,10 +279,31 @@ const sentimentIcons = {
 
 function Dashboard() {
   const { mentions, overviewPromise } = Route.useLoaderData();
+  const [isScraping, setIsScraping] = useState(false);
+
+  const handleScrape = async () => {
+    setIsScraping(true);
+    try {
+      await fetch("/api/scrape");
+    } catch (error) {
+      console.error("Failed to trigger scrape:", error);
+    } finally {
+      setIsScraping(false);
+    }
+  };
 
   return (
     <div className="flex gap-4 h-screen p-4">
       <div className="flex-1 min-w-96">
+        <div className="mb-4">
+          <Button
+            onClick={handleScrape}
+            disabled={isScraping}
+            className="w-full"
+          >
+            {isScraping ? "Scraping..." : "Run Scraper"}
+          </Button>
+        </div>
         <Suspense fallback={<div>Loading...</div>}>
           <Await promise={overviewPromise}>
             {(overview) => {
